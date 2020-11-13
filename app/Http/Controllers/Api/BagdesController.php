@@ -13,27 +13,28 @@ class BagdesController extends Controller
         return Bagdes::all();
     }
 
-    public function show (Bagdes $bagde)
+    public function show ($id)
     {   
-        $bagde = Bagdes::findOrFail($bagde);
-        return response()->json($bagde, 200);
+        $specific = Bagdes::findOrFail($id);
+        return response()->json($specific, 200);
     }
 
     public function store (Request $request)
     {
         $bagde = Bagdes::create($request->all());
-        return $bagde;
+        return response()->json($bagde, 200);
     }
 
-    public function update (Request $request, Bagdes $bagde)
+    public function update (Request $request, $id)
     {
+        $bagde = Bagdes::findOrFail($id);
         $bagde->update($request->all());
         return response()->json($bagde, 200);
     }
 
-    public function delete (Bagdes $bagde)
+    public function delete ($id)
     {
-        $bagde->delete();
+        $id->delete();
         return response()->json(null, 204);
     }
 }

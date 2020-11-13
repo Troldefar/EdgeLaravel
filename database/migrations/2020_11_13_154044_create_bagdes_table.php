@@ -15,10 +15,12 @@ class CreateBagdesTable extends Migration
     {
         Schema::create('bagdes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
+            // Keep unique identities
+            $table->string('title')->unique();
             $table->text('body');
             $table->text('description');
-            $table->string('level');
+            // Keep unique identities
+            $table->string('level')->unique();
             $table->timestamps();
         });
     }

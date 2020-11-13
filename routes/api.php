@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\Bagdes;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,10 +22,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('bagdes', 'App\Http\Controllers\Api\BagdesController@index');
 
-Route::get('bagdes/{bagde}', 'App\Http\Controllers\Api\BagdesController@show');
+Route::get('bagdes/{id}', 'App\Http\Controllers\Api\BagdesController@show');
 
 Route::post('bagdes', 'App\Http\Controllers\Api\BagdesController@store');
 
-Route::put('bagdes/{bagde}', 'App\Http\Controllers\Api\BagdesController@update');
+Route::put('bagdes/{id}', 'App\Http\Controllers\Api\BagdesController@update');
 
-Route::delete('bagdes/{bagde}', 'App\Http\Controllers\Api\BagdesController@delete');
+Route::delete('bagdes/{id}', 'App\Http\Controllers\Api\BagdesController@delete');
