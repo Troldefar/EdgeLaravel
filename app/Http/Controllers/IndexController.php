@@ -8,6 +8,6 @@ class IndexController extends Controller
 {
     public function index()
     {
-        return 'Den her?';
+        return response()->json('API: Ok', 200);
     }
 }
