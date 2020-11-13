@@ -20,12 +20,27 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('bagdes', 'App\Http\Controllers\Api\BagdesController@index');
+Route::group(['middleware' => 'auth:api'], function () {
 
-Route::get('bagdes/{id}', 'App\Http\Controllers\Api\BagdesController@show');
+    /* Statistics */
+    Route::get('statistics/{id}', 'App\Http\Controllers\Api\StatisticsController@userStatistics');
 
-Route::post('bagdes', 'App\Http\Controllers\Api\BagdesController@store');
+    /* Friends */
+    Route::get('friends/{id}', 'App\Http\Controllers\Api\FriendsController@userFriends');
 
-Route::put('bagdes/{id}', 'App\Http\Controllers\Api\BagdesController@update');
+    /* Logs */
+    Route::get('logs/{id}', 'App\Http\Controllers\Api\LogsController@logs');
 
-Route::delete('bagdes/{id}', 'App\Http\Controllers\Api\BagdesController@delete');
+    /* User settings */
+    Route::get('settings/{id}', 'App\Http\Controllers\Api\SettingsController@settings');
+
+    /* Teams */
+    Route::get('teams/{id}', 'App\Http\Controllers\Api\TeamsController@teams');
+
+    /* Bagdes */
+    Route::get('bagdes', 'App\Http\Controllers\Api\BagdesController@index');
+    Route::get('bagdes/{id}', 'App\Http\Controllers\Api\BagdesController@show');
+    Route::post('bagdes', 'App\Http\Controllers\Api\BagdesController@store');
+    Route::put('bagdes/{id}', 'App\Http\Controllers\Api\BagdesController@update');
+    Route::delete('bagdes/{id}', 'App\Http\Controllers\Api\BagdesController@delete');
+});
