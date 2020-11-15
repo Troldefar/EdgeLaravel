@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\IndexController@index');
+Route::get('ping', 'App\Http\Controllers\IndexController@index');
+
+Route::post('login', 'App\Http\Controllers\Auth\LoginController@login');
+Route::post('register', 'App\Http\Controllers\Auth\RegisterController@register');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -22,22 +25,39 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'auth:api'], function () {
 
-    /* Statistics */
+    /** 
+     * User
+    */
+    Route::post('logout', 'App\Http\Controllers\Auth\LoginController@logout');
+
+    /**
+     * Statistics
+    */
     Route::get('statistics/{id}', 'App\Http\Controllers\Api\StatisticsController@userStatistics');
 
-    /* Friends */
+    /**
+     * Friends
+    */
     Route::get('friends/{id}', 'App\Http\Controllers\Api\FriendsController@userFriends');
 
-    /* Logs */
+    /**
+     * Logs
+    */
     Route::get('logs/{id}', 'App\Http\Controllers\Api\LogsController@logs');
 
-    /* User settings */
+    /**
+     * User settings
+    */
     Route::get('settings/{id}', 'App\Http\Controllers\Api\SettingsController@settings');
 
-    /* Teams */
+    /**
+     * Teams
+    */
     Route::get('teams/{id}', 'App\Http\Controllers\Api\TeamsController@teams');
 
-    /* Bagdes */
+    /**
+     * Bagdes
+    */
     Route::get('bagdes', 'App\Http\Controllers\Api\BagdesController@index');
     Route::get('bagdes/{id}', 'App\Http\Controllers\Api\BagdesController@show');
     Route::post('bagdes', 'App\Http\Controllers\Api\BagdesController@store');

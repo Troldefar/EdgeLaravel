@@ -10,6 +10,6 @@ class IndexController extends Controller
     public function index()
     {
         Log::debug('Some random message');
-        return response()->json('API: Ok', 200);
+        return response()->json('Pong', 200);
     }
 }
