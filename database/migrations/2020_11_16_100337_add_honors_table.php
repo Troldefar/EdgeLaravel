@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddLogsTable extends Migration
+class AddHonorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('logs', function (Blueprint $table) {
+        Schema::create('honors', function (Blueprint $table) {
             $table->id();
-            $table->text('text');
+            $table->text('honorMessage');
             $table->string('user_id')->nullable();
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class AddLogsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('logs');
+        //
     }
 }
