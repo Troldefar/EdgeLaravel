@@ -9,7 +9,7 @@ class IndexController extends Controller
 {
     public function index()
     {
-        Log::debug('Some random message');
+        Log::debug('User viewed this page');
         return response()->json('Pong', 200);
     }
 }

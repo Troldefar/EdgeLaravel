@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -22,6 +26,27 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        Log::debug('User registered');
+
+        DB::table('logs')->insert(['text' => $user->name . ' registered.']);
+
+        return $request->wantsJson()
+                    ? new JsonResponse([], 201)
+                    : redirect($this->redirectPath());
+    }
 
     use RegistersUsers;
 
@@ -45,6 +70,7 @@ class RegisterController extends Controller
     public function registered (Request $request, $user)
     {
         $user->generateToken();
+        Log::debug($user->name . ' Generated a token');
         return response()->json(['data' => $user->toArray()]);
     }
 

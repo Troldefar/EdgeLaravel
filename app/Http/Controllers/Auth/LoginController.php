@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -55,14 +57,16 @@ class LoginController extends Controller
         $user = $this->guard()->user();
         $user->generateToken();
 
-        dd($user);
-
         if ($response = $this->authenticated($request, $this->guard()->user())) {
             return $response;
         }
 
+        Log::debug('User logged in');
+
+        DB::table('logs')->insert(['text' => $user->name . ' logged in.']);
+
         return $request->wantsJson()
-                    ? new JsonResponse('', 204)
+                    ? new JsonResponse(Auth::guard()->user(), 200)
                     : '?';
     }
 
