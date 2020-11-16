@@ -32,7 +32,7 @@ class LoginTest extends TestCase
 
     public function testUserLoginsSuccessfully()
     {
-        $user = factory(User::class)->create([
+        factory(User::class)->create([
             'email' => 'test@test.dk',
             'password' => bcrypt('edgetest')
         ]);

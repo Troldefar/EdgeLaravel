@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -51,13 +52,28 @@ class LoginController extends Controller
     {
         $this->clearLoginAttempts($request);
 
+        $user = $this->guard()->user();
+        $user->generateToken();
+
+        dd($user);
+
         if ($response = $this->authenticated($request, $this->guard()->user())) {
             return $response;
         }
 
         return $request->wantsJson()
-                    ? new JsonResponse([], 204)
+                    ? new JsonResponse('', 204)
                     : '?';
+    }
+
+    public function logout(Request $request)
+    {
+        $user = Auth::guard('api')->user();
+        if($user) {
+            $user->api_token = null;
+            $user->save();
+        }
+        return response()->json(['data' => 'Logged out'], 200);
     }
 
 

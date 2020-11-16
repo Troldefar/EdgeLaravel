@@ -25,6 +25,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'auth:api'], function () {
 
+    /**
+     * Administrator stuff goes here
+     */
+
+    Route::group(['middleware' => 'auth:admin'], function () {
+        Route::get('allUsers', 'App\Http\Controllers\Api\Admin\UserController@index');
+    });
+
     /** 
      * User
     */
