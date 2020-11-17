@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     /**
      * Logs
     */
-    Route::get('logs/{id}', 'App\Http\Controllers\Api\LogsController@logs');
+    Route::get('logs', 'App\Http\Controllers\Api\LogsController@index');
 
     /**
      * User settings

@@ -41,7 +41,7 @@ class RegisterController extends Controller
 
         Log::debug('User registered');
 
-        DB::table('logs')->insert(['text' => $user->name . ' registered.']);
+        DB::table('logs')->insert(['text' => $user->name . ' registered.', now()]);
 
         return $request->wantsJson()
                     ? new JsonResponse([], 201)

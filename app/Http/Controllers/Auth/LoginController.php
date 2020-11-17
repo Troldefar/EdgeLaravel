@@ -63,7 +63,7 @@ class LoginController extends Controller
 
         Log::debug('User logged in');
 
-        DB::table('logs')->insert(['text' => $user->name . ' logged in.']);
+        DB::table('logs')->insert(['text' => $user->name . ' logged in.', 'created_at' => now()]);
 
         return $request->wantsJson()
                     ? new JsonResponse(Auth::guard()->user(), 200)
