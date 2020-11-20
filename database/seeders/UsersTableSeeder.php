@@ -15,24 +15,26 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        //
         User::truncate();
-        // Faker
         $faker = \Faker\Factory::create();
-        // Test password
-        $password = Hash::make('edgetest');
-        // Users
+
+        /** 
+         * TEST ADMIN USER
+         */
         User::create([
             'name' => 'Admin',
             'email' => 'r_emil@live.dk',
-            'password' => $password
+            'password' => Hash::make('l0ll0l')
         ]);
-        // Test regular users
+
+        /** 
+         * TEST SEEDER USERS
+         */
         for ($i = 0; $i < 10; $i++) {
             User::create([
                 'name' => $faker->name,
                 'email' => $faker->email,
-                'password' => $password
+                'password' => Hash::make('edgetest')
             ]);
         }
     }

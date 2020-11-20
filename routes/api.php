@@ -14,24 +14,49 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/** 
+ * Ping
+ * Pong?
+ */
 Route::get('ping', 'App\Http\Controllers\IndexController@index');
 
+/** 
+ * AUTH
+ * Laravel scaffolding is used
+ */
 Route::post('login', 'App\Http\Controllers\Auth\LoginController@login');
 Route::post('register', 'App\Http\Controllers\Auth\RegisterController@register');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::group(['middleware' => 'auth:api'], function () {
+
+    /** SESSION KEEPER
+     * Guarded user
+     */
+    Route::get('user', function (Request $request) {
+        return $request->user();
+    });
 
     /**
      * Administrator stuff goes here
      */
-
     Route::group(['middleware' => 'auth:admin'], function () {
-        Route::get('allUsers', 'App\Http\Controllers\Api\Admin\UserController@index');
+        /** 
+         * /GET info
+         */
+        Route::get('users/admin', 'App\Http\Controllers\Api\Admin\UserController@index');
+        Route::get('logs/admin', 'App\Http\Controllers\Api\Admin\LogsController@index');
+        Route::get('statistics/admin', 'App\Http\Controllers\Api\Admin\StatisticsController@index');
+        Route::get('payments/admin', 'App\Http\Controllers\Admin\PaymentController@index');
+        Route::get('bagdes/admin', 'App\Http\Controllers\Admin\BagdesController@index');
+        Route::get('team/admin', 'App\Http\Controllers\Admin\TeamController@index');
+        Route::get('games/admin', 'App\Http\Controllers\Admin\GameController@index');
     });
+
+    /** 
+     * Game controller
+     */
+    Route::get('games', 'App\Http\Controllers\Api\GameController@index');
+    Route::post('games', 'App\Http\Controllers\Api\GameController@store');
 
     /** 
      * User
