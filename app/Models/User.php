@@ -50,6 +50,11 @@ class User extends Authenticatable
         return Invite::where('user_id', $id);
     }
 
+    public function games() 
+    {
+        return $this->belongsToMany(Game::class);
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

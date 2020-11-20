@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Invite;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class InviteController extends Controller
@@ -27,7 +28,7 @@ class InviteController extends Controller
      */
     public function create()
     {
-        //
+        return response()->json(Invite::get(), 200);
     }
 
     /**
@@ -38,7 +39,6 @@ class InviteController extends Controller
      */
     public function store(Request $request)
     {
-        
         $already = Invite::where([
             ['user_id', $request->input('user_id')], 
             ['friend_id', $request->input('friend_id')]])
@@ -55,10 +55,16 @@ class InviteController extends Controller
         
         DB::table('logs')
             ->insert(
-                ['text' => User::find($request->input('user_id'))->name . ' invited ' . User::find($request->input('friend_id'))->name, 'created_at' => now()]
+                ['text' => Auth::user()->name . ' invited ' . User::find($request->input('friend_id'))->name, 'created_at' => now()]
             );
         
         return response()->json(null, 200);
+    }
+
+    public function invites()
+    {
+        $invites = Auth::user()->invites(Auth::user()->id);
+        return response()->json($invites, 200);
     }
 
     /**

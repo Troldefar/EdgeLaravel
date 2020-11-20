@@ -21,9 +21,4 @@ class UserController extends Controller
         $users = $query->get();
         return $users;
     }
-
-    public function invites(Request $request)
-    {
-        return response()->json(Auth::user()->invites($request->input('id'))->get(), 200);
-    }
 }
