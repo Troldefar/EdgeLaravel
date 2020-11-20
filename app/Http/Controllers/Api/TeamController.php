@@ -13,9 +13,17 @@ class TeamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Team::get(), 200);
+        $query = Team::query();
+
+        $query->when($request->input('search'), function ($q) use ($request) {
+            return $q->where('teamname', 'like', '%' . $request->input('search') . '%')
+                    ->orWhere('names', 'like', '%' . $request->input('search') . '%');
+        });
+
+        $users = $query->get();
+        return $users;
     }
 
     /**

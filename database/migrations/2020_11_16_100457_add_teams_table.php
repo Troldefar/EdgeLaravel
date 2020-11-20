@@ -18,6 +18,7 @@ class AddTeamsTable extends Migration
             $table->string('teamname');
             $table->string('description');
             $table->string('names');
+            $table->integer('wins');
             $table->timestamps();
         });
     }
