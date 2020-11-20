@@ -23,6 +23,16 @@ class User extends Authenticatable
         'password',
     ];
 
+    /** Friend relationship
+     * 1 User can have many friends
+     * 1 User acts as a friend himself even though the "type" is user
+     */
+
+    public function friends()
+    {
+        $this->belongsToMany(Friends::class);
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

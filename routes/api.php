@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth:api'], function () {
      * Friends
     */
     Route::get('friends/{id}', 'App\Http\Controllers\Api\FriendsController@userFriends');
+    Route::get('users', 'App\Http\Controllers\Api\UserController@index');
 
     /**
      * Logs
