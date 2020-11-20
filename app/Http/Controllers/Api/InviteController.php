@@ -39,7 +39,10 @@ class InviteController extends Controller
     public function store(Request $request)
     {
         
-        $already = Invite::where([['user_id', $request->input('user_id')], ['friend_id', $request->input('friend_id')]])->get();
+        $already = Invite::where([
+            ['user_id', $request->input('user_id')], 
+            ['friend_id', $request->input('friend_id')]])
+            ->get();
 
         if(sizeof($already) > 0) {
             return response()->json('You already invited this user', 409);
@@ -50,7 +53,10 @@ class InviteController extends Controller
             'friend_id' => $request->input('friend_id')
         ]);
         
-        DB::table('logs')->insert(['text' => User::find($request->input('user_id'))->name . ' invited ' . User::find($request->input('friend_id'))->name, 'created_at' => now()]);
+        DB::table('logs')
+            ->insert(
+                ['text' => User::find($request->input('user_id'))->name . ' invited ' . User::find($request->input('friend_id'))->name, 'created_at' => now()]
+            );
         
         return response()->json(null, 200);
     }
