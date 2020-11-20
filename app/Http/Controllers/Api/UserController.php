@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -19,5 +20,10 @@ class UserController extends Controller
 
         $users = $query->get();
         return $users;
+    }
+
+    public function invites(Request $request)
+    {
+        return response()->json(Auth::user()->invites($request->input('id'))->get(), 200);
     }
 }

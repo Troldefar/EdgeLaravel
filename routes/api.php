@@ -48,6 +48,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     */
     Route::get('friends/{id}', 'App\Http\Controllers\Api\FriendsController@userFriends');
     Route::get('users', 'App\Http\Controllers\Api\UserController@index');
+    Route::get('invites/{id}', 'App\Http\Controllers\Api\UserController@invites');
+    Route::post('invite', 'App\Http\Controllers\Api\InviteController@store');
 
     /**
      * Logs

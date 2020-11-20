@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class FriendUserTable extends Migration
+class FriendUserPivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class FriendUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('friends', function (Blueprint $table) {
-            $table->id();
-            $table->integer('user_id')->unsigned();
-            $table->integer('friend_id')->unsigned();
+        Schema::create('invites', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('friend_id');
+            $table->integer('user_id');
+            $table->boolean('accepted')->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class FriendUserTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('friend_user');
     }
 }

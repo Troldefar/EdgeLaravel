@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+Use App\Models\Invite;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -30,7 +32,22 @@ class User extends Authenticatable
 
     public function friends()
     {
-        $this->belongsToMany(Friends::class);
+        return $this->belongsToMany('User', 'friend_user', 'user_id', 'friend_user');
+    }
+
+    public function addFriend(User $user)
+    {
+        $this->friends()->attach($user->id);
+    }
+
+    public function removeFriend(User $user)
+    {
+        $this->friends()->detach($user->id);
+    }
+
+    public function invites($id)
+    {
+        return Invite::where('user_id', $id);
     }
 
     /**
