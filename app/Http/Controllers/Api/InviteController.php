@@ -38,6 +38,13 @@ class InviteController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $already = Invite::where([['user_id', $request->input('user_id')], ['friend_id', $request->input('friend_id')]])->get();
+
+        if(sizeof($already) > 0) {
+            return response()->json('You already invited this user', 409);
+        }
+
         Invite::create([
             'user_id' => $request->input('user_id'),
             'friend_id' => $request->input('friend_id')
