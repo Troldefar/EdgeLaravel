@@ -91,6 +91,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     */
     Route::get('teams', 'App\Http\Controllers\Api\TeamController@index');
     Route::get('teams/{id}', 'App\Http\Controllers\Api\TeamController@show');
+    Route::post('teams', 'App\Http\Controllers\Api\TeamController@store');
 
     /**
      * Bagdes

@@ -22,8 +22,7 @@ class TeamSeeder extends Seeder
         for($i = 0; $i < 50; $i++) {
             Team::create([
                 'teamname' => 'Team ' . $i,
-                'description' => 'Team' . $i . ' Description',
-                'names' => 'Rasmus' . $i . ' Lasse' . $i . ' Nick' . $i . ' Martin' . $i . ' Louise' . $i
+                'description' => 'Team' . $i . ' Description'
             ]);
         }
     }

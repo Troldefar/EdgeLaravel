@@ -43,8 +43,12 @@ class TeamController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        if(Team::where('teamname', '=', $request->input('teamname'))->first()) {
+            return response()->json('Name taken', 409);
+        }
+        Team::create($request->all());
+        return response()->json('Team created', 200);
     }
 
     /**
