@@ -19,7 +19,7 @@ class TeamController extends Controller
 
         $query->when($request->input('search'), function ($q) use ($request) {
             return $q->where('teamname', 'like', '%' . $request->input('search') . '%')
-                    ->orWhere('names', 'like', '%' . $request->input('search') . '%');
+                    ->orWhere('description', 'like', '%' . $request->input('search') . '%');
         });
 
         $users = $query->get();
@@ -48,7 +48,7 @@ class TeamController extends Controller
             return response()->json('Name taken', 409);
         }
         Team::create($request->all());
-        return response()->json('Team created', 200);
+        return response()->json(Team::where('teamname', '=', $request->input('teamname'))->first(), 200);
     }
 
     /**
