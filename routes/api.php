@@ -29,6 +29,13 @@ Route::post('register', 'App\Http\Controllers\Auth\RegisterController@register')
 
 Route::group(['middleware' => 'auth:api'], function () {
 
+    /** 
+     * ROLES
+     * FOR TESTING PURPOSES
+     */
+
+    Route::get('roles', 'App\Http\Controllers\Api\PermissionController@Permission');
+
     /** SESSION KEEPER
      * Guarded user
      */
@@ -39,7 +46,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     /**
      * Administrator stuff goes here
      */
-    Route::group(['middleware' => 'auth:admin'], function () {
+    Route::group(['middleware' => 'role:admin'], function () {
         /** 
          * /GET info
          */
