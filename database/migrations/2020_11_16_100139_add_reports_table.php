@@ -15,8 +15,8 @@ class AddReportsTable extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->text('reportMessage');
-            $table->string('user_id')->nullable();
+            $table->text('reportMessage')->nullable();
+            $table->string('user_id');
             $table->timestamps();
         });
     }

@@ -15,8 +15,8 @@ class AddHonorsTable extends Migration
     {
         Schema::create('honors', function (Blueprint $table) {
             $table->id();
-            $table->text('honorMessage');
-            $table->string('user_id')->nullable();
+            $table->text('honorMessage')->nullable();
+            $table->string('user_id');
             $table->timestamps();
         });
     }

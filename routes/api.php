@@ -44,7 +44,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     /**
-     * Administrator stuff goes here
+     * Role middleware for admins
+     * 
      */
     Route::group(['middleware' => 'role:admin'], function () {
         /** 
